@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlogVerse - Read Article</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">BlogVerse</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="explore.html">Explore All</a>
+    <a href="write-blog.html">Write Blog</a>
+    <a href="why-blogverse.html">Why Us</a>
+    <div id="authNav">
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+</div>
+
+<div class="blog-container" id="blogContainer">
+  <!-- Blog content will be loaded here by JavaScript -->
+</div>
+
+<div class="container" style="margin-top:80px;">
+  <h2>More Articles You Might Like</h2>
+  <div class="grid related-blogs"></div>
+</div>
+
+<div class="footer">© 2026 BlogVerse | Exploring Ideas, Sharing Stories</div>
+
+<script>
+  // Fallback blogs
+  const fallbackBlogs = [
+    { _id: "1", title: "How AI is Transforming Content Creation", desc: "Discover how artificial intelligence is revolutionizing the way we write and create content in 2026.", category: "Technology", authorName: "Sarah Chen", date: "Jan 15, 2026", readTime: 8, image: "https://picsum.photos/seed/ai-technology/800/600", content: "<h2>The Rise of AI in Writing</h2><p>Artificial intelligence has fundamentally changed how writers approach their craft. From brainstorming to editing, AI tools are now integral to the content creation process. Writers can generate outlines, refine grammar, and even get suggestions for better phrasing in real-time.</p><p>Machine learning algorithms analyze millions of articles to understand what makes content engaging and effective. These insights help creators craft stories that resonate with their audience. AI doesn't replace creativity; instead, it amplifies it by handling repetitive tasks and offering fresh perspectives.</p><p>The future of content creation lies in the collaboration between human creativity and artificial intelligence, creating a powerful synergy that produces better quality content faster than ever before.</p>" },
+    { _id: "2", title: "Minimalism in Web Design: Less is More", desc: "Learn why clean, minimal UI design creates better user experiences and improves conversion rates.", category: "Design", authorName: "Marcus Johnson", date: "Jan 12, 2026", readTime: 6, image: "https://picsum.photos/seed/web-design/800/600", content: "<h2>Understanding Minimalist Design</h2><p>Minimalism in web design removes unnecessary elements while maintaining functionality and beauty. This approach focuses on whitespace, typography, and essential visual elements that guide users seamlessly through the interface.</p><p>Minimal design improves load times, reduces cognitive overload, and creates a more intuitive user experience. When users visit a minimal website, they can focus on the core message without distractions. Studies show that websites with minimal design have higher conversion rates and better user engagement.</p><p>The principles of minimalism extend beyond aesthetics—they represent a philosophy of intentional design where every element serves a purpose. By embracing simplicity, designers create powerful, memorable experiences that users love to revisit.</p>" },
+    { _id: "3", title: "Remote Work Culture: The New Normal", desc: "Exploring how remote work has reshaped workplace dynamics and employee well-being.", category: "Lifestyle", authorName: "Emma Rodriguez", date: "Jan 10, 2026", readTime: 7, image: "https://picsum.photos/seed/remote-work/800/600", content: "<h2>The Evolution of Work</h2><p>The pandemic accelerated a shift in remote work that transformed how we think about productivity and collaboration. Companies that embraced remote work discovered unexpected benefits: improved employee satisfaction, reduced overhead costs, and access to a global talent pool.</p><p>Remote work has redefined work-life balance for many professionals. Without commute times, employees have more flexibility to manage personal responsibilities while maintaining professional commitments. This shift has led to happier, more engaged teams across industries.</p><p>However, remote work also presents challenges including isolation, communication barriers, and the blurred line between work and home. The successful companies of tomorrow will be those that establish strong remote work cultures with clear communication, robust tools, and genuine connection among team members.</p>" },
+    { _id: "4", title: "The Psychology Behind Habit Formation", desc: "Science-backed strategies to build lasting habits and break destructive patterns.", category: "Self-Improvement", authorName: "Dr. James Wilson", date: "Jan 8, 2026", readTime: 10, image: "https://picsum.photos/seed/habits-motivation/800/600", content: "<h2>Understanding Habit Loops</h2><p>Our brains are hardwired to form habits through a process called the habit loop. This cycle consists of three parts: the cue, the routine, and the reward. Understanding this mechanism is key to building positive habits and breaking negative ones.</p><p>The cue is the trigger that initiates a behavior. It could be time of day, an emotional state, or an environmental factor. The routine is the behavior itself—what you do in response to the cue. The reward is the benefit your brain receives, which reinforces the loop and makes the behavior automatic.</p><p>To build better habits, identify your cues and rewards, then adjust the routine in between. For example, if stress triggers eating junk food (the reward), replace the routine with a healthier behavior like exercise or meditation. With repetition, typically 30-60 days, your brain rewires itself and the new habit becomes automatic. This science-backed approach works because you're working with your brain's natural processes rather than against them.</p>" },
+    { _id: "5", title: "Sustainable Living: Making a Difference", desc: "Practical tips for reducing your carbon footprint and living more sustainably.", category: "Environment", authorName: "Green Warriors Team", date: "Jan 5, 2026", readTime: 9, image: "https://picsum.photos/seed/sustainable-nature/800/600", content: "<h2>Why Sustainable Living Matters</h2><p>Climate change is happening now, and individual actions matter more than ever. Sustainable living isn't about perfection; it's about making conscious choices that reduce your environmental impact. Small changes across millions of people create significant global impact.</p><p>Start with the basics: reduce energy consumption, minimize waste, and choose sustainable products. Simple actions like using reusable bags, conserving water, and reducing meat consumption add up. Every choice you make either supports or harms the environment.</p><p>The beautiful part of sustainable living is that it often saves money and improves health. Growing your own food, walking instead of driving, and buying secondhand items benefit both your wallet and the planet. By adopting sustainable practices, you're not just helping the environment—you're investing in a healthier future for yourself and your family.</p>" },
+    { _id: "6", title: "Mastering Photography Composition", desc: "Essential composition techniques that transform ordinary photos into stunning images.", category: "Photography", authorName: "Alex Photography", date: "Jan 3, 2026", readTime: 8, image: "https://picsum.photos/seed/photography-camera/800/600", content: "<h2>The Rule of Thirds</h2><p>Good composition is the foundation of compelling photography. The rule of thirds is one of the most powerful composition techniques in photography. It divides your frame into nine equal parts using two horizontal and two vertical lines, creating natural focal points where the eye is drawn.</p><p>Placing your subject along these lines or at their intersections creates more tension, energy, and interest in your images compared to centering the subject. Most smartphone cameras have an option to display a grid overlay to help you apply this rule instantly.</p><p>Beyond the rule of thirds, study leading lines, framing, depth of field, and symmetry. Practice composing your shots intentionally before pressing the shutter button. As you develop your compositional skills, you'll transform ordinary moments into extraordinary visual stories that captivate viewers.</p>" },
+    { _id: "7", title: "The Future of Education Technology", desc: "How EdTech is revolutionizing learning and making quality education accessible to everyone.", category: "Education", authorName: "Prof. Linda Martinez", date: "Dec 30, 2025", readTime: 11, image: "https://picsum.photos/seed/education-learning/800/600", content: "<h2>Digital Transformation</h2><p>Education technology breaks down geographical and economic barriers, making quality education accessible to anyone with an internet connection. Virtual classrooms, interactive learning platforms, and AI-powered tutoring systems are democratizing education globally.</p><p>EdTech enables personalized learning experiences tailored to each student's pace and learning style. Adaptive algorithms identify knowledge gaps and recommend resources to help students master concepts before moving forward. This personalized approach leads to better outcomes and increased student engagement.</p><p>The future of education isn't about replacing teachers—it's about empowering them. Technology handles administrative tasks and content delivery, freeing educators to focus on mentorship, critical thinking development, and fostering genuine connections with students. Combined with human guidance, EdTech creates transformative educational experiences that prepare students for success in an increasingly complex world.</p>" },
+    { _id: "8", title: "Financial Literacy for Beginners", desc: "Essential money management skills everyone should know to build wealth and security.", category: "Finance", authorName: "David Finance Guru", date: "Dec 28, 2025", readTime: 9, image: "https://picsum.photos/seed/finance-money/800/600", content: "<h2>Building Financial Foundation</h2><p>Financial literacy is a valuable skill that too many people neglect. Understanding budgeting, saving, investing, and debt management empowers you to make smart financial decisions that build wealth over time. Whether you're just starting out or recovering from financial mistakes, it's never too late to improve your financial literacy.</p><p>Start with these fundamentals: create a budget that tracks income and expenses, build an emergency fund covering 3-6 months of expenses, and understand the power of compound interest through long-term investing. Avoid high-interest debt and always pay yourself first by setting aside a portion of income for savings and investments.</p><p>Financial security doesn't require a high income—it requires discipline and smart decision-making. By mastering these foundational skills early in your career, you set yourself up for financial independence and the freedom to pursue what truly matters to you in life.</p>" }
+  ];
+
+  // Get all blogs (from fallback or API)
+  let allBlogs = [...fallbackBlogs];
+
+  // Load blogs from localStorage (user-created blogs)
+  function loadUserBlogs() {
+    const userBlogs = JSON.parse(localStorage.getItem('userBlogs') || '[]');
+    allBlogs = [...fallbackBlogs, ...userBlogs];
+  }
+
+  // Get blog ID from URL
+  function getBlogIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
+  }
+
+  // Load and display specific blog
+  async function loadBlog() {
+    loadUserBlogs();
+    const blogId = getBlogIdFromUrl();
+    
+    if (!blogId) {
+      document.getElementById('blogContainer').innerHTML = '<p>Blog not found</p>';
+      return;
+    }
+
+    let blog = null;
+
+    // First try to fetch from API
+    try {
+      const response = await fetch(`http://localhost:5000/api/blogs/${blogId}`);
+      if (response.ok) {
+        const data = await response.json();
+        blog = data.blog;
+      }
+    } catch (err) {
+      console.log('API not available, checking local blogs');
+    }
+
+    // If not found in API, search in local blogs
+    if (!blog) {
+      blog = allBlogs.find(b => b._id == blogId);
+    }
+
+    if (!blog) {
+      document.getElementById('blogContainer').innerHTML = '<p>Blog not found</p>';
+      return;
+    }
+
+    // Display blog
+    const container = document.getElementById('blogContainer');
+    container.innerHTML = `
+      <div class="blog-header">
+        <img src="${blog.image}" alt="${blog.title}" class="blog-hero-image">
+        <div class="blog-header-content">
+          <h1>${blog.title}</h1>
+          <div class="blog-meta">
+            <span class="author">${blog.authorName}</span>
+            <span class="date">${blog.date}</span>
+            <span class="read-time">${blog.readTime} min read</span>
+            <span class="category">${blog.category}</span>
+          </div>
+        </div>
+      </div>
+      <div class="blog-content">
+        ${blog.content}
+      </div>
+    `;
+
+    // Load related blogs
+    loadRelatedBlogs(blog.category, blogId);
+  }
+
+  // Load related blogs
+  function loadRelatedBlogs(category, currentBlogId) {
+    // First try to find blogs in the same category
+    let related = allBlogs.filter(b => b.category === category && b._id != currentBlogId);
+    
+    // If not enough related blogs, add random blogs from other categories
+    if (related.length < 3) {
+      const otherBlogs = allBlogs.filter(b => b.category !== category && b._id != currentBlogId);
+      const randomBlogs = otherBlogs.sort(() => Math.random() - 0.5).slice(0, 3 - related.length);
+      related = [...related, ...randomBlogs];
+    }
+    
+    related = related.slice(0, 3);
+    
+    const grid = document.querySelector('.related-blogs');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    related.forEach(blog => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="card-image-wrapper">
+          <img src="${blog.image}" alt="${blog.title}">
+          <div class="card-badge">${blog.category}</div>
+        </div>
+        <div class="card-body">
+          <h3>${blog.title}</h3>
+          <p>${blog.desc}</p>
+          <div class="card-meta">
+            <span>${blog.authorName}</span>
+            <span>${blog.readTime} min read</span>
+          </div>
+          <a href="blog.html?id=${blog._id}" class="read-more">Read More →</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Load blog on page load
+  document.addEventListener('DOMContentLoaded', loadBlog);
+</script>
+</body>
+</html>

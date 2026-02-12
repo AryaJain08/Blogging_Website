@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - BlogVerse</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">BlogVerse</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="explore.html">Explore</a>
+    <a href="register.html">Create Account</a>
+  </div>
+</div>
+
+<div class="form-box">
+  <h2>Welcome Back</h2>
+  <p style="color:#999;margin-bottom:25px;">Sign in to your account to continue reading</p>
+  <input type="email" id="loginEmail" placeholder="Email Address" required>
+  <input type="password" id="loginPassword" placeholder="Password" required>
+  <button onclick="handleLogin()">Sign In</button>
+  <p id="loginError" style="text-align:center;color:#ff6b6b;margin-top:15px;display:none;"></p>
+  <p style="text-align:center;margin-top:20px;color:#999;">
+    Don't have an account? <a href="register.html" style="color:#667eea;font-weight:600;">Create one</a>
+  </p>
+</div>
+
+<script type="module">
+import { authAPI, authManager } from './js/api.js';
+
+window.handleLogin = async function() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  const errorDiv = document.getElementById('loginError');
+  
+  if (!email || !password) {
+    errorDiv.textContent = 'Please fill in all fields';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  try {
+    const result = await authAPI.login(email, password);
+    authManager.setAuth(result.token, result.user);
+    window.location.href = 'index.html';
+  } catch (err) {
+    errorDiv.textContent = err.message || 'Login failed. Please check your credentials.';
+    errorDiv.style.display = 'block';
+  }
+};
+</script>
+
+</body>
+</html>

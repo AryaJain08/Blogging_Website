@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Write Your Blog - BlogVerse</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .write-blog-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 300px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group-full {
+      grid-column: 1 / -1;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 40px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-cancel {
+      background: #f0f0f0;
+      color: #333;
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .btn-cancel:hover {
+      background: #e0e0e0;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .alert.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .alert.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+
+    .alert.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+      display: block;
+    }
+
+    .write-blog-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .write-blog-header h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .write-blog-header p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .login-prompt {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 40px auto;
+    }
+
+    .login-prompt a {
+      color: white;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .form-help {
+      font-size: 13px;
+      color: #999;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn-submit,
+      .btn-cancel {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">BlogVerse</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="explore.html">Explore All</a>
+    <a href="write-blog.html">Write Blog</a>
+    <a href="why-blogverse.html">Why Us</a>
+    <div id="authNav">
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+</div>
+
+<div class="write-blog-container">
+  <div class="write-blog-header">
+    <h1>✍️ Share Your Story</h1>
+    <p>Write and publish your blog post on BlogVerse</p>
+  </div>
+
+  <div id="authRequired" class="login-prompt" style="display: none;">
+    <h3>Login to Write a Blog</h3>
+    <p>You need to be logged in to write and publish your own blog posts. <a href="login.html">Click here to login</a><br>or <a href="register.html">create an account</a>.</p>
+  </div>
+
+  <div id="blogForm" style="display: none;">
+    <div id="alertMessage" class="alert"></div>
+
+    <form id="writeBlogForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="title">Blog Title *</label>
+          <input type="text" id="title" name="title" placeholder="Enter an engaging title for your blog" required>
+          <div class="form-help">Make it catchy and descriptive</div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option value="Technology">Technology</option>
+            <option value="Design">Design</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Self-Improvement">Self-Improvement</option>
+            <option value="Environment">Environment</option>
+            <option value="Photography">Photography</option>
+            <option value="Education">Education</option>
+            <option value="Finance">Finance</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="desc">Description/Summary *</label>
+          <input type="text" id="desc" name="desc" placeholder="Brief summary of your blog (appears in listings)" required>
+          <div class="form-help">Keep it under 150 characters</div>
+        </div>
+
+        <div class="form-group">
+          <label for="readTime">Estimated Read Time (minutes) *</label>
+          <input type="number" id="readTime" name="readTime" min="1" max="120" value="5" required>
+          <div class="form-help">How long does it take to read?</div>
+        </div>
+      </div>
+
+      <div class="form-group form-group-full">
+        <label for="content">Content *</label>
+        <textarea id="content" name="content" placeholder="Write your blog content here. You can use HTML tags for formatting (e.g., <h2>Heading</h2>, <p>Paragraph</p>, <strong>Bold</strong>, etc.)" required></textarea>
+        <div class="form-help">Write your full blog content. Supports HTML formatting.</div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-cancel" onclick="window.location.href='index.html'">Cancel</button>
+        <button type="submit" class="btn btn-submit">Publish Blog</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="footer">© 2026 BlogVerse | Exploring Ideas, Sharing Stories</div>
+
+<script src="js/main.js"></script>
+<script>
+  // Check if user is logged in
+  function initWriteBlogPage() {
+    const isLoggedIn = localStorage.getItem('userToken');
+    const authRequired = document.getElementById('authRequired');
+    const blogForm = document.getElementById('blogForm');
+
+    if (!isLoggedIn) {
+      authRequired.style.display = 'block';
+      blogForm.style.display = 'none';
+      return;
+    }
+
+    authRequired.style.display = 'none';
+    blogForm.style.display = 'block';
+
+    // Setup form submission
+    document.getElementById('writeBlogForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await submitBlog();
+    });
+  }
+
+  // Submit blog
+  async function submitBlog() {
+    const title = document.getElementById('title').value.trim();
+    const category = document.getElementById('category').value;
+    const desc = document.getElementById('desc').value.trim();
+    const readTime = document.getElementById('readTime').value;
+    const content = document.getElementById('content').value.trim();
+
+    // Validation
+    if (!title || !category || !desc || !readTime || !content) {
+      showAlert('Please fill in all fields', 'error');
+      return;
+    }
+
+    if (desc.length > 150) {
+      showAlert('Description should be under 150 characters', 'error');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('userToken');
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      // Try to post to backend API
+      try {
+        const response = await fetch('http://localhost:5000/api/blogs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            title,
+            desc,
+            category,
+            readTime: parseInt(readTime),
+            content,
+            authorName: user.username,
+            image: `https://picsum.photos/seed/${title.replace(/\s+/g, '-').toLowerCase()}/800/600`
+          })
+        });
+
+        if (response.ok) {
+          showAlert('Blog published successfully! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'explore.html';
+          }, 2000);
+        } else {
+          throw new Error('API error');
+        }
+      } catch (apiErr) {
+        // Fallback: Store locally if backend is not available
+        console.log('Backend not available, storing blog locally');
+        
+        const blog = {
+          _id: Date.now().toString(),
+          title,
+          desc,
+          category,
+          readTime: parseInt(readTime),
+          content,
+          authorName: user.username,
+          image: `https://picsum.photos/seed/${title.replace(/\s+/g, '-').toLowerCase()}/800/600`,
+          date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+          views: 0
+        };
+
+        // Store in localStorage
+        let userBlogs = JSON.parse(localStorage.getItem('userBlogs') || '[]');
+        userBlogs.push(blog);
+        localStorage.setItem('userBlogs', JSON.stringify(userBlogs));
+
+        showAlert('Blog saved locally! (Backend not available). Redirecting...', 'success');
+        setTimeout(() => {
+          window.location.href = 'explore.html';
+        }, 2000);
+      }
+    } catch (err) {
+      showAlert('Error publishing blog: ' + err.message, 'error');
+    }
+  }
+
+  // Show alert
+  function showAlert(message, type) {
+    const alertDiv = document.getElementById('alertMessage');
+    alertDiv.textContent = message;
+    alertDiv.className = `alert ${type}`;
+    alertDiv.style.display = 'block';
+
+    if (type === 'success') {
+      setTimeout(() => {
+        alertDiv.style.display = 'none';
+      }, 5000);
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initWriteBlogPage);
+</script>
+</body>
+</html>

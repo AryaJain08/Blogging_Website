@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - BlogVerse</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">BlogVerse</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="explore.html">Explore</a>
+    <a href="login.html">Sign In</a>
+  </div>
+</div>
+
+<div class="form-box">
+  <h2>Create Your Account</h2>
+  <p style="color:#999;margin-bottom:25px;">Join our community and start reading amazing stories</p>
+  <input type="text" id="registerUsername" placeholder="Username" required>
+  <input type="email" id="registerEmail" placeholder="Email Address" required>
+  <input type="password" id="registerPassword" placeholder="Password" required>
+  <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" required>
+  <button onclick="handleRegister()">Create Account</button>
+  <p id="registerError" style="text-align:center;color:#ff6b6b;margin-top:15px;display:none;"></p>
+  <p style="text-align:center;margin-top:20px;color:#999;">
+    Already have an account? <a href="login.html" style="color:#667eea;font-weight:600;">Sign in</a>
+  </p>
+</div>
+
+<script type="module">
+import { authAPI, authManager } from './js/api.js';
+
+window.handleRegister = async function() {
+  const username = document.getElementById('registerUsername').value;
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+  const confirmPassword = document.getElementById('registerConfirmPassword').value;
+  const errorDiv = document.getElementById('registerError');
+  
+  if (!username || !email || !password || !confirmPassword) {
+    errorDiv.textContent = 'Please fill in all fields';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  if (password !== confirmPassword) {
+    errorDiv.textContent = 'Passwords do not match';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  try {
+    const result = await authAPI.register(username, email, password, confirmPassword);
+    authManager.setAuth(result.token, result.user);
+    window.location.href = 'index.html';
+  } catch (err) {
+    errorDiv.textContent = err.message || 'Registration failed. Please try again.';
+    errorDiv.style.display = 'block';
+  }
+};
+</script>
+
+</body>
+</html>
